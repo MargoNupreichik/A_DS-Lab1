@@ -19,7 +19,7 @@ public:
 
 	Определение и реализация 19 методов для однонаправленных списков. +
 
-	Реализовать консольный интерфейс.
+	Реализовать консольный интерфейс. +
 
 	Определить размеры для дальнейшего сбора данных.
 
@@ -31,12 +31,27 @@ public:
 
 // Класс - представление однонаправленного списка.
 
+/*
+		!!!
+
+		Блок, используемый для отслеживания состояния списка.
+
+		cout << "Список имеет вид:\n";
+		for (int j = 0; j < lenArray[i]; j++) {
+			cout << lists[i]->getElem(j) << " ";
+		}
+		cout << endl;
+
+		!!!
+*/
+
 class OneLinkList
 {
 public:
 	Elem* head; Elem* tail;
 
 	OneLinkList();
+	OneLinkList(OneLinkList* copy);
 
 	void insLast(int toInsert);												// 1.	добавление в конец списка +
 	void insFirst(int toInsert);											// 2.	добавление в начало списка +
@@ -73,7 +88,7 @@ int main()
 	cout << "Программа создает 5 списков, длины которых соответственно\nравны 1000, 2000, 3000, 4000, 5000.\n";
 	cout << "Значения элементов списка создаются с помощью функции rand()/\n";
 
-	int lenArray[5] = { 10, 20, 30, 40, 50 };
+	int lenArray[5] = { 10, 20, 10, 40, 50 };
 
 	// Генерация нескольких списков
 	OneLinkList* lists[5];
@@ -83,11 +98,6 @@ int main()
 			int toAdd = rand();
 			lists[i]->insLast(toAdd);
 		}
-		/*cout << "Список имеет вид:\n";
-		for (int j = 0; j < lenArray[i]; j++) {
-			cout << lists[i]->getElem(j) << " ";
-		}
-		cout << endl;*/
 	}
 
 	cout << "Введите число от 1 по 19 (число соттветствует порядковому\nномеру из списка реализуемых методов)." << endl;
@@ -118,9 +128,9 @@ int main()
 				cout << "Вставка в начало " << i + 1 << " списка.\n";
 				lists[i]->insFirst(insertFirst);
 				lenArray[i]++;
-			}	
+			}
 		}
-			break;
+		break;
 		case 3:
 			// Удаление последнего элемента.
 			for (int i = 0; i < 5; i++) {
@@ -147,11 +157,11 @@ int main()
 			for (int i = 0; i < 5; i++) {
 				index = rand() % lenArray[i];
 				lists[i]->insertBefore(index, value);
-				cout << "Вставка в" << i+1 << " список после " << index << " элемента." << endl;
+				cout << "Вставка в" << i + 1 << " список после " << index << " элемента." << endl;
 				lenArray[i]++;
 			}
 		}
-			break;
+		break;
 		case 6:
 			// Получение элемента по индексу.
 		{
@@ -162,7 +172,7 @@ int main()
 				cout << "По индексу " << index << " списка " << i + 1 << " находится значение: " << elem << "." << endl;
 			}
 		}
-			break;
+		break;
 		case 7:
 			// Удаление элемента по индексу.
 		{
@@ -174,7 +184,7 @@ int main()
 				lenArray[i]--;
 			}
 		}
-			break;
+		break;
 		case 8:
 			// Получение длины списка.
 			for (int i = 0; i < 5; i++) {
@@ -200,7 +210,7 @@ int main()
 				cout << "Значение по индексу " << index << " в списке " << i + 1 << " было заменено на " << value << "." << endl;
 			}
 		}
-			break;
+		break;
 		case 11:
 			// Проверка на пустой список
 			for (int i = 0; i < 5; i++) {
@@ -212,9 +222,10 @@ int main()
 			break;
 		case 12:
 			//Поменять направление списка.
+			cout << endl;
 			for (int i = 0; i < 5; i++) {
 				lists[i]->changeDirection();
-				cout << "Направление списка " << i + 1 << " было изменено.";
+				cout << "Направление списка " << i + 1 << " было изменено.\n";
 			}
 			break;
 		case 13:
@@ -236,7 +247,7 @@ int main()
 			}
 			break;
 		case 15:
-			// Вставка списка перед первым элементом
+			// Вставка списка перед первым элементом.
 			for (int i = 0; i < 4; i += 2) {
 				int index = rand() % lenArray[i];
 				lists[i]->insertListBeforeFirst(lists[i + 1]);
@@ -247,10 +258,10 @@ int main()
 		case 16: // !!!!!!!!!!!!!
 			// Определить вложен ли список.
 			for (int i = 0; i < 4; i += 2) {
-				bool isNull = lists[i]->ifListInCurrent(lists[i+1]);
+				bool isNull = lists[i]->ifListInCurrent(lists[i + 1]);
 				cout << "Список " << i + 2;
 				if (!isNull) cout << " не ";
-				cout << " находится в списке " << i+1 << "." << endl;
+				cout << " находится в списке " << i + 1 << "." << endl;
 			}
 			break;
 		case 17:
@@ -271,10 +282,10 @@ int main()
 			break;
 		case 19:
 			// Поменять значения двух элементов по индексам местами.
-			for (int i = 0; i < 5; i ++) {
-				int index1 = rand() * lenArray[i];
-				int index2 = rand() * lenArray[i];
-				lists[i]->changeByIndex(index1, index2);
+			for (int i = 0; i < 5; i++) {
+				int index1 = rand() % lenArray[i];
+				int index2 = rand() % lenArray[i];
+				lists[i]->changeTwoByIndex(index1, index2);
 				cout << "В списке " << i + 1 << " изменены значения по индексам " << index1 << " и " << index2 << ".\n";
 			}
 			break;
@@ -285,6 +296,13 @@ int main()
 		}
 		cin >> currentMethod;
 	}
+}
+
+void swap(int*& a, int*& b)
+{
+	int* c = a;
+	a = b;
+	b = c;
 }
 
 Elem::Elem(int numb)
@@ -298,6 +316,16 @@ OneLinkList::OneLinkList()
 {
 	this->head = NULL;
 	this->tail = NULL;
+}
+
+OneLinkList::OneLinkList(OneLinkList* copy)
+{
+	this->head = this->tail = NULL;
+	Elem* fromCopy = copy->head;
+	while (fromCopy != NULL) {
+		this->insLast(*(fromCopy->number));
+		fromCopy = fromCopy->next;
+	}
 }
 
 void OneLinkList::insLast(int toInsert)
@@ -471,145 +499,142 @@ void OneLinkList::changeDirection()
 	Elem* currentElem = this->head;
 	int indexCounter = 0;
 	int length = this->getListLen();
-	while (indexCounter < length / 2) {
-		int fromBeginning = *(currentElem->number);
-		int fromEnding = 0; this->getElem(length - indexCounter - 1);
-		*(currentElem->number) = fromEnding;
-		this->changeByIndex(length - indexCounter - 1, fromBeginning);
-		indexCounter++;
-		currentElem = currentElem->next;
+	for (int i = 0; i < length / 2; i++) {
+		this->changeTwoByIndex(i, length - i - 1);
 	}
 }
 
 void OneLinkList::insertListAfterIndex(OneLinkList* toInsert, int index)
 {
+	OneLinkList* copied = new OneLinkList(toInsert);
+
 	Elem* toInsertAfter = this->head;
 	int indexCounter = 0;
+
 	while (indexCounter < index) {
 		toInsertAfter = toInsertAfter->next;
 		indexCounter++;
 	}
-	Elem* willBeAfter = toInsertAfter->next;
-	toInsertAfter->next = toInsert->head;
-	toInsert->tail->next = willBeAfter;
+
+	Elem* wasAfter = toInsertAfter->next;
+	toInsertAfter->next = copied->head;
+	copied->tail->next = wasAfter;
 }
 
 void OneLinkList::insertListAfterLast(OneLinkList* toInsert)
 {
-	Elem* wasLast = this->tail;
-	wasLast->next = toInsert->head;
-	this->tail = toInsert->tail;
+	OneLinkList* copied = new OneLinkList(toInsert);
+	this->tail = copied->head;
+
 }
 
 void OneLinkList::insertListBeforeFirst(OneLinkList* toInsert)
 {
-	Elem* wasFirst = this->head;
-	this->head = toInsert->head;
-	toInsert->tail->next = wasFirst;
+	OneLinkList* copied = new OneLinkList(toInsert);
+	Elem* wasHead = this->head;
+	this->head = copied->head;
+	copied->tail->next = wasHead;
 }
 
 bool OneLinkList::ifListInCurrent(OneLinkList* toFind)
 {
-	Elem* currentL1 = this->head;
-	Elem* currentL2 = toFind->head;
-	while (currentL1 != NULL && currentL2 != NULL) {
-		if (currentL1->number == currentL2->number) {
-			bool flag = true;
-			Elem* innerCompL1 = currentL1->next;
-			while (flag && innerCompL1 != NULL && currentL2 != NULL) {
-				if (innerCompL1->number == currentL2->number) {
-					innerCompL1 = innerCompL1->next;
-					currentL2 = currentL2->next;
+	Elem* element = this->head;
+	Elem* compare = toFind->head;
+	int indexCount = 0; bool atLeastOne = false;
+	if (element != NULL) {
+		do {
+			if (*(element->number) == *(compare->number)) {
+				while (element != NULL && compare != NULL && (*(element->number) == *(compare->number))) {
+					element = element->next;
+					compare = compare->next;
+				}
+				if (compare == NULL) {
+					atLeastOne = true;
+					break;
 				}
 				else {
-					flag = false;
-					currentL2 = toFind->head;
+					compare = toFind->head;
 				}
 			}
-			if (flag) return true;
-		}
-		else {
-			currentL1 = currentL1->next;
-		}
+			element = element->next;
+		} while (element != NULL && !atLeastOne);
 	}
-	return false;
+	return atLeastOne;
 }
 
 int OneLinkList::findFirstEntry(OneLinkList* toFind)
 {
-	Elem* currentL1 = this->head;
-	Elem* currentL2 = toFind->head;
-	int currentIndex = 0;
-	while (currentL1 != NULL && currentL2 != NULL) {
-		if (currentL1->number == currentL2->number) {
-			bool flag = true;
-			Elem* innerCompL1 = currentL1->next;
-			while (flag && innerCompL1 != NULL && currentL2 != NULL) {
-				if (innerCompL1->number == currentL2->number) {
-					innerCompL1 = innerCompL1->next;
-					currentL2 = currentL2->next;
+	Elem* element = this->head;
+	Elem* compare = toFind->head;
+	unsigned indexCount = 0; bool atLeastOne = false; int index = 0;
+	if (element != NULL) {
+		do {
+			if (*(element->number) == *(compare->number)) {
+				while (element != NULL && compare != NULL && (*(element->number) == *(compare->number))) {
+					element = element->next;
+					compare = compare->next;
+				}
+				if (compare == NULL) {
+					atLeastOne = true;
+					break;
 				}
 				else {
-					flag = false;
-					currentL2 = toFind->head;
+					compare = toFind->head;
 				}
 			}
-			if (flag) return currentIndex;
-		}
-		else {
-			currentL1 = currentL1->next;
-			currentIndex++;
-		}
+			element = element->next;
+			index++;
+		} while (element != NULL && !atLeastOne);
 	}
-	return -1;
+	if (atLeastOne) return index;
+	else return -1;
 }
 
 int OneLinkList::findLastEntry(OneLinkList* toFind)
 {
-	Elem* currentL1 = this->head;
-	Elem* currentL2 = toFind->head;
-	int currentIndex = 0; int lastIn = -1;
-	while (currentL1 != NULL && currentL2 != NULL) {
-		if (currentL1->number == currentL2->number) {
-			bool flag = true;
-			Elem* innerCompL1 = currentL1->next;
-			while (flag && innerCompL1 != NULL && currentL2 != NULL) {
-				if (innerCompL1->number == currentL2->number) {
-					innerCompL1 = innerCompL1->next;
-					currentL2 = currentL2->next;
+	Elem* element = this->head;
+	Elem* compare = toFind->head;
+	unsigned indexCount = 0; bool atLeastOne = false;
+	int currentIndex = 0; int lasIndex = 0;
+	if (element != NULL && compare != NULL) {
+		while (element != NULL) {
+			if (*(element->number) == *(compare->number)) {
+				lasIndex = currentIndex;
+				while (element != NULL && compare != NULL && (*(element->number) == *(compare->number))) {
+					element = element->next;
+					compare = compare->next;
+					currentIndex++;
 				}
-				else {
-					flag = false;
-					currentL2 = toFind->head;
+				if (compare == NULL) {
+					atLeastOne = true;
+					lasIndex = currentIndex;
 				}
+				compare = toFind->head;
 			}
-			if (flag) {
-				lastIn = currentIndex;
-				currentL1 = innerCompL1;
-				currentL2 = toFind->head;
-			}
-		}
-		else {
-			currentL1 = currentL1->next;
-			currentIndex++;
+			element = element->next;
 		}
 	}
-	return lastIn;
+	if (atLeastOne) return lasIndex;
+	else return -1;
 }
 
 void OneLinkList::changeTwoByIndex(int index1, int index2)
 {
-	Elem* first = NULL; Elem* second = NULL; Elem* currentElem = this->head;
-	int currentIndex = 0;
-	while (true) {
-		if (currentIndex = min(index1, index2)) first = currentElem;
-		if (currentIndex = max(index1, index2)) second = currentElem;
-		if (first != NULL && second != NULL) break;
-		currentIndex++;
+	Elem* first = this->head; Elem* second = this->head; Elem* currentElem = this->head;
+	int length = this->getListLen();
+	bool ifFoundFirst = false;
+
+	for (int i = 0; i < length; i++) {
+		if ((i == index1 || i == index2) && !ifFoundFirst) {
+			first = currentElem;
+			ifFoundFirst = true;
+		}
+		if ((i == index1 || i == index2) && ifFoundFirst) second = currentElem;
+		currentElem = currentElem->next;
 	}
-	int temp = *(first->number);
-	*(first->number) = *(second->number);
-	*(second->number) = temp;
+
+	swap(*(&first->number), *(&second->number));
+
 }
 
 OneLinkList::~OneLinkList()
