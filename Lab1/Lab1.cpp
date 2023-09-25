@@ -1,7 +1,7 @@
 ﻿// Lab1.cpp Нупрейчик Маргарита, гр. 2309, вариант 6
 
 #include <iostream>
-
+#include <ctime>
 using namespace std;
 
 // Класс - представление элемента однонаправленого списка
@@ -23,9 +23,9 @@ public:
 
 	Определить размеры для дальнейшего сбора данных.
 
-	Определить библиотеку для отслеживания времени выполнения функции.
+	Определить библиотеку для отслеживания времени выполнения функции. +
 
-	Создать внешнее приложение для отлова входных данных функций (размер списка, время выполнении операции) и создании графиков на их основе.
+	Создать внешнее приложение для отлова входных данных функций (размер списка, время выполнении операции) и создании графиков на их основе. +
 
 */
 
@@ -95,7 +95,7 @@ int main()
 	for (int i = 0; i < 5; i++) {
 		lists[i] = new OneLinkList;
 		for (int j = 0; j < lenArray[i]; j++) {
-			int toAdd = rand();
+			int toAdd = rand() % 100;
 			lists[i]->insLast(toAdd);
 		}
 	}
@@ -113,7 +113,10 @@ int main()
 			cin >> insertLast;
 			for (int i = 0; i < 5; i++) {
 				cout << "Вставка в конец " << i + 1 << " списка.\n";
+				clock_t start = clock();
 				lists[i]->insLast(insertLast);
+				clock_t end = clock();
+				double tacts = (double)(end - start);
 				lenArray[i]++;
 			}
 		}
@@ -126,23 +129,32 @@ int main()
 			cin >> insertFirst;
 			for (int i = 0; i < 5; i++) {
 				cout << "Вставка в начало " << i + 1 << " списка.\n";
+				clock_t start = clock();
 				lists[i]->insFirst(insertFirst);
 				lenArray[i]++;
+				clock_t end = clock();
+				double tacts = (double)(end - start);
 			}
 		}
 		break;
 		case 3:
 			// Удаление последнего элемента.
 			for (int i = 0; i < 5; i++) {
+				clock_t start = clock();
 				lists[i]->delLast();
 				lenArray[i]--;
+				clock_t end = clock();
+				double tacts = (double)(end - start);
 				cout << "Последний элемент списка " << i + 1 << " удален.\n";
 			}
 			break;
 		case 4:
 			// Удаление первого элемента.
 			for (int i = 0; i < 5; i++) {
+				clock_t start = clock();
 				lists[i]->delFirst();
+				clock_t end = clock();
+				double tacts = (double)(end - start);
 				lenArray[i]--;
 				cout << "Первый элемент списка " << i + 1 << " удален.\n";
 			}
@@ -156,7 +168,10 @@ int main()
 			cout << "Индекс для каждого списка создается отдельно.\n";
 			for (int i = 0; i < 5; i++) {
 				index = rand() % lenArray[i];
+				clock_t start = clock();
 				lists[i]->insertBefore(index, value);
+				clock_t end = clock();
+				double tacts = (double)(end - start);
 				cout << "Вставка в" << i + 1 << " список после " << index << " элемента." << endl;
 				lenArray[i]++;
 			}
@@ -168,7 +183,10 @@ int main()
 			int index = 0;
 			for (int i = 0; i < 5; i++) {
 				index = rand() % lenArray[i];
+				clock_t start = clock();
 				int elem = lists[i]->getElem(index);
+				clock_t end = clock();
+				double tacts = (double)(end - start);
 				cout << "По индексу " << index << " списка " << i + 1 << " находится значение: " << elem << "." << endl;
 			}
 		}
@@ -179,7 +197,10 @@ int main()
 			int index = 0;
 			for (int i = 0; i < 5; i++) {
 				index = rand() % lenArray[i];
+				clock_t start = clock();
 				lists[i]->deleteElem(index);
+				clock_t end = clock();
+				double tacts = (double)(end - start);
 				cout << "По индексу " << index << " списка " << i + 1 << " был удален элемент." << endl;
 				lenArray[i]--;
 			}
@@ -188,14 +209,20 @@ int main()
 		case 8:
 			// Получение длины списка.
 			for (int i = 0; i < 5; i++) {
+				clock_t start = clock();
 				int length = lists[i]->getListLen();
+				clock_t end = clock();
+				double tacts = (double)(end - start);
 				cout << "Длина списка " << i + 1 << " равна " << length << "." << endl;
 			}
 			break;
 		case 9:
 			// Удаление всех элементов списка.
 			for (int i = 0; i < 5; i++) {
+				clock_t start = clock();
 				lists[i]->deleteAll();
+				clock_t end = clock();
+				double tacts = (double)(end - start);
 				cout << "Список " << i + 1 << " был полностью очищен." << endl;
 				lenArray[i]--;
 			}
@@ -207,6 +234,10 @@ int main()
 			for (int i = 0; i < 5; i++) {
 				index = rand() % lenArray[i];
 				value = rand();
+				clock_t start = clock();
+				lists[i]->changeByIndex(index, value);
+				clock_t end = clock();
+				double tacts = (double)(end - start);
 				cout << "Значение по индексу " << index << " в списке " << i + 1 << " было заменено на " << value << "." << endl;
 			}
 		}
@@ -214,7 +245,10 @@ int main()
 		case 11:
 			// Проверка на пустой список
 			for (int i = 0; i < 5; i++) {
+				clock_t start = clock();
 				bool isNull = lists[i]->checkIsEmpty();
+				clock_t end = clock();
+				double tacts = (double)(end - start);
 				cout << "Список " << i + 1;
 				if (!isNull) cout << "не";
 				cout << " пуст." << endl;
@@ -224,7 +258,10 @@ int main()
 			//Поменять направление списка.
 			cout << endl;
 			for (int i = 0; i < 5; i++) {
+				clock_t start = clock();
 				lists[i]->changeDirection();
+				clock_t end = clock();
+				double tacts = (double)(end - start);
 				cout << "Направление списка " << i + 1 << " было изменено.\n";
 			}
 			break;
@@ -232,7 +269,10 @@ int main()
 			// Вставка списка после определенного элемента.
 			for (int i = 0; i < 4; i += 2) {
 				int index = rand() % lenArray[i];
+				clock_t start = clock();
 				lists[i]->insertListAfterIndex(lists[i + 1], index);
+				clock_t end = clock();
+				double tacts = (double)(end - start);
 				lenArray[i] += lenArray[i + 1];
 				cout << "Список " << i + 2 << " был вставлен в список " << i + 1 << "после элемента с индексом " << index << "." << endl;
 			}
@@ -241,7 +281,10 @@ int main()
 			// Вставка списка после последнего элемента.
 			for (int i = 0; i < 4; i += 2) {
 				int index = rand() % lenArray[i];
+				clock_t start = clock();
 				lists[i]->insertListAfterLast(lists[i + 1]);
+				clock_t end = clock();
+				double tacts = (double)(end - start);
 				lenArray[i] += lenArray[i + 1];
 				cout << "Список " << i + 2 << " был вставлен в конец списка " << i + 1 << "." << endl;
 			}
@@ -250,15 +293,21 @@ int main()
 			// Вставка списка перед первым элементом.
 			for (int i = 0; i < 4; i += 2) {
 				int index = rand() % lenArray[i];
+				clock_t start = clock();
 				lists[i]->insertListBeforeFirst(lists[i + 1]);
+				clock_t end = clock();
+				double tacts = (double)(end - start);
 				lenArray[i] += lenArray[i + 1];
 				cout << "Список " << i + 2 << " был вставлен в начало списка " << i + 1 << "." << endl;
 			}
 			break;
-		case 16: // !!!!!!!!!!!!!
+		case 16:
 			// Определить вложен ли список.
 			for (int i = 0; i < 4; i += 2) {
+				clock_t start = clock();
 				bool isNull = lists[i]->ifListInCurrent(lists[i + 1]);
+				clock_t end = clock();
+				double tacts = (double)(end - start);
 				cout << "Список " << i + 2;
 				if (!isNull) cout << " не ";
 				cout << " находится в списке " << i + 1 << "." << endl;
@@ -267,25 +316,53 @@ int main()
 		case 17:
 			// Найти первое вхождение в список другого списка.
 			for (int i = 0; i < 4; i += 2) {
+				clock_t start = clock();
 				int isIn = lists[i]->findFirstEntry(lists[i + 1]);
-				if (!isIn) cout << "Первое вхождение по индексу " << isIn << "." << endl;
+				clock_t end = clock();
+				double tacts = (double)(end - start);
+				if (isIn != -1) cout << "Первое вхождение по индексу " << isIn << "." << endl;
 				else cout << "Вхождений не обнаружено.\n";
 			}
 			break;
 		case 18:
 			// Найти последнее вхождение.
-			for (int i = 0; i < 4; i += 2) {
+			/*for (int i = 0; i < 4; i += 2) {
+			*	clock_t start = clock();
 				int isIn = lists[i]->findLastEntry(lists[i + 1]);
+				clock_t end = clock();
+				double tacts = (double)(end - start);
 				if (!isIn) cout << "Последнее вхождение по индексу " << isIn << "." << endl;
 				else cout << "Вхождений не обнаружено.\n";
-			}
-			break;
+			}*/
+
+		{
+			cout << "Список 1 имеет вид:\n";
+			Elem* current = lists[0]->head;
+			do {
+				cout << *(current->number) << " ";
+				current = current->next;
+			} while (current != NULL);
+
+			cout << "\nСписок 2 имеет вид:\n";
+			current = lists[1]->head;
+			do {
+				cout << *(current->number) << " ";
+				current = current->next;
+			} while (current != NULL);
+			int isIn = lists[0]->findLastEntry(lists[1]);
+			if (isIn != -1) cout << "Последнее вхождение по индексу " << isIn << "." << endl;
+			else cout << "Вхождений не обнаружено.\n";
+		}
+		break;
 		case 19:
 			// Поменять значения двух элементов по индексам местами.
 			for (int i = 0; i < 5; i++) {
 				int index1 = rand() % lenArray[i];
 				int index2 = rand() % lenArray[i];
+				clock_t start = clock();
 				lists[i]->changeTwoByIndex(index1, index2);
+				clock_t end = clock();
+				double tacts = (double)(end - start);
 				cout << "В списке " << i + 1 << " изменены значения по индексам " << index1 << " и " << index2 << ".\n";
 			}
 			break;
@@ -296,6 +373,7 @@ int main()
 		}
 		cin >> currentMethod;
 	}
+
 }
 
 void swap(int*& a, int*& b)
@@ -339,7 +417,7 @@ void OneLinkList::insLast(int toInsert)
 void OneLinkList::insFirst(int toInsert)
 {
 	Elem* elem = new Elem(toInsert);
-	if (head == NULL) head = elem;
+	if (head == NULL) { head = elem; tail = elem; }
 	else {
 		elem->next = head;
 		head = elem;
@@ -360,9 +438,11 @@ void OneLinkList::delLast()
 		// проверка на единственность элемента в списке
 		if (preLast == head) {
 			cout << "You're deleting the only element.\n";
+			delete preLast->number;
 			delete preLast;
 		}
 		else {
+			delete preLast->next->number;
 			delete preLast->next;
 		}
 	}
@@ -372,6 +452,7 @@ void OneLinkList::delFirst()
 {
 	if (head == NULL) return;
 	if (head == tail) { // один элемент в односвязном списке
+		delete tail->number;
 		delete tail;
 		head = NULL; tail = NULL;
 		return;
@@ -524,8 +605,8 @@ void OneLinkList::insertListAfterIndex(OneLinkList* toInsert, int index)
 void OneLinkList::insertListAfterLast(OneLinkList* toInsert)
 {
 	OneLinkList* copied = new OneLinkList(toInsert);
-	this->tail = copied->head;
-
+	this->tail->next = copied->head;
+	this->tail = copied->tail;
 }
 
 void OneLinkList::insertListBeforeFirst(OneLinkList* toInsert)
@@ -540,41 +621,16 @@ bool OneLinkList::ifListInCurrent(OneLinkList* toFind)
 {
 	Elem* element = this->head;
 	Elem* compare = toFind->head;
-	int indexCount = 0; bool atLeastOne = false;
-	if (element != NULL) {
-		do {
-			if (*(element->number) == *(compare->number)) {
-				while (element != NULL && compare != NULL && (*(element->number) == *(compare->number))) {
-					element = element->next;
-					compare = compare->next;
-				}
-				if (compare == NULL) {
-					atLeastOne = true;
-					break;
-				}
-				else {
-					compare = toFind->head;
-				}
-			}
-			element = element->next;
-		} while (element != NULL && !atLeastOne);
-	}
-	return atLeastOne;
-}
-
-int OneLinkList::findFirstEntry(OneLinkList* toFind)
-{
-	Elem* element = this->head;
-	Elem* compare = toFind->head;
 	unsigned indexCount = 0; bool atLeastOne = false; int index = 0;
-	if (element != NULL) {
+	if (element != nullptr) {
 		do {
 			if (*(element->number) == *(compare->number)) {
-				while (element != NULL && compare != NULL && (*(element->number) == *(compare->number))) {
-					element = element->next;
+				Elem* aa = element;
+				while (aa != nullptr && compare != nullptr && (*(aa->number) == *(compare->number))) {
+					aa = aa->next;
 					compare = compare->next;
 				}
-				if (compare == NULL) {
+				if (compare == nullptr) {
 					atLeastOne = true;
 					break;
 				}
@@ -584,7 +640,36 @@ int OneLinkList::findFirstEntry(OneLinkList* toFind)
 			}
 			element = element->next;
 			index++;
-		} while (element != NULL && !atLeastOne);
+		} while (element != nullptr && !atLeastOne);
+	}
+	if (atLeastOne) return true;
+	else return false;
+}
+
+int OneLinkList::findFirstEntry(OneLinkList* toFind)
+{
+	Elem* element = this->head;
+	Elem* compare = toFind->head;
+	bool atLeastOne = false; int index = 0;
+	if (element != nullptr) {
+		do {
+			if (*(element->number) == *(compare->number)) {
+				Elem* aa = element;
+				while (aa != nullptr && compare != nullptr && (*(aa->number) == *(compare->number))) {
+					aa = aa->next;
+					compare = compare->next;
+				}
+				if (compare == nullptr) {
+					atLeastOne = true;
+					break;
+				}
+				else {
+					compare = toFind->head;
+				}
+			}
+			element = element->next;
+			index++;
+		} while (element != nullptr && !atLeastOne);
 	}
 	if (atLeastOne) return index;
 	else return -1;
@@ -594,27 +679,26 @@ int OneLinkList::findLastEntry(OneLinkList* toFind)
 {
 	Elem* element = this->head;
 	Elem* compare = toFind->head;
-	unsigned indexCount = 0; bool atLeastOne = false;
-	int currentIndex = 0; int lasIndex = 0;
-	if (element != NULL && compare != NULL) {
-		while (element != NULL) {
+	int indexCount = 0; bool atLeastOne = false; int index = 0;
+	if (element != NULL) {
+		do {
 			if (*(element->number) == *(compare->number)) {
-				lasIndex = currentIndex;
-				while (element != NULL && compare != NULL && (*(element->number) == *(compare->number))) {
-					element = element->next;
+				Elem* aa = element;
+				while (aa != nullptr && compare != nullptr && (*(aa->number) == *(compare->number))) {
+					aa = aa->next;
 					compare = compare->next;
-					currentIndex++;
 				}
-				if (compare == NULL) {
+				if (compare == nullptr) {
 					atLeastOne = true;
-					lasIndex = currentIndex;
+					indexCount = index;
 				}
 				compare = toFind->head;
 			}
 			element = element->next;
-		}
+			index++;
+		} while (element != nullptr);
 	}
-	if (atLeastOne) return lasIndex;
+	if (atLeastOne) return indexCount;
 	else return -1;
 }
 
