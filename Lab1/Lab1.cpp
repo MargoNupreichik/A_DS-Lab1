@@ -85,14 +85,16 @@ int main()
 
 	short int currentMethod = 0;
 
-	cout << "Программа создает 5 списков, длины которых соответственно\nравны 1000, 2000, 3000, 4000, 5000.\n";
-	cout << "Значения элементов списка создаются с помощью функции rand()/\n";
+	cout << "Программа создает 4 списка, длины которых соответственно\nравны 1 000 000, 2 000 000, 3 000 000, 4 000 000.\n";
+	cout << "Значения элементов списка создаются с помощью функции rand().\n";
 
-	int lenArray[5] = { 10, 20, 10, 40, 50 };
+	const int N = 4;
+
+	int lenArray[N] = { 1000000, 2000000, 3000000, 4000000 };
 
 	// Генерация нескольких списков
-	OneLinkList* lists[5];
-	for (int i = 0; i < 5; i++) {
+	OneLinkList* lists[N];
+	for (int i = 0; i < N; i++) {
 		lists[i] = new OneLinkList;
 		for (int j = 0; j < lenArray[i]; j++) {
 			int toAdd = rand() % 100;
@@ -102,6 +104,7 @@ int main()
 
 	cout << "Введите число от 1 по 19 (число соттветствует порядковому\nномеру из списка реализуемых методов)." << endl;
 	cout << "Если вы хотите завершить работу программы, введите 0." << endl;
+	cout.precision(10);
 	cin >> currentMethod;
 	while (currentMethod) {
 		switch (currentMethod) {
@@ -111,12 +114,13 @@ int main()
 			cout << "Введите значение, которое нужно вставить в конец списка.\n";
 			int insertLast = 0;
 			cin >> insertLast;
-			for (int i = 0; i < 5; i++) {
-				cout << "Вставка в конец " << i + 1 << " списка.\n";
+			for (int i = 0; i < N; i++) {
+				cout << "Вставка в конец " << i + 1 << " списка.";
 				clock_t start = clock();
 				lists[i]->insLast(insertLast);
-				clock_t end = clock();
-				double tacts = (double)(end - start);
+				double time = double(clock() - start);
+				
+				cout << " Время выполнения: " << fixed << time << endl;
 				lenArray[i]++;
 			}
 		}
@@ -127,52 +131,54 @@ int main()
 			cout << "Введите значение, которое нужно вставить в начало списка.\n";
 			int insertFirst = 0;
 			cin >> insertFirst;
-			for (int i = 0; i < 5; i++) {
-				cout << "Вставка в начало " << i + 1 << " списка.\n";
+			for (int i = 0; i < N; i++) {
+				cout << "Вставка в начало " << i + 1 << " списка.";
 				clock_t start = clock();
 				lists[i]->insFirst(insertFirst);
 				lenArray[i]++;
-				clock_t end = clock();
-				double tacts = (double)(end - start);
+				double time = double(clock() - start);
+
+				cout << " Время выполнения: " << fixed << time << endl;
 			}
 		}
 		break;
 		case 3:
 			// Удаление последнего элемента.
-			for (int i = 0; i < 5; i++) {
+			for (int i = 0; i < N; i++) {
 				clock_t start = clock();
 				lists[i]->delLast();
 				lenArray[i]--;
 				clock_t end = clock();
-				double tacts = (double)(end - start);
 				cout << "Последний элемент списка " << i + 1 << " удален.\n";
+				double time = double(clock() - start);
+				cout << " Время выполнения: " << fixed << time << endl;
 			}
 			break;
 		case 4:
 			// Удаление первого элемента.
-			for (int i = 0; i < 5; i++) {
+			for (int i = 0; i < N; i++) {
 				clock_t start = clock();
 				lists[i]->delFirst();
-				clock_t end = clock();
-				double tacts = (double)(end - start);
+				double time = double(clock() - start);
 				lenArray[i]--;
-				cout << "Первый элемент списка " << i + 1 << " удален.\n";
+				cout << "Первый элемент списка " << i + 1 << " удален.";
+				cout << " Время выполнения: " << fixed << time << endl;
 			}
 			break;
-		case 5: // !!!!!!!!!! Где-то падает
+		case 5:
 			// Вставка перед элеентом с определенным индексом.
 		{
 			int value = 0, index = 0;
 			cout << "Введите значение, которое хотите добавить в список:\n";
 			cin >> value;
 			cout << "Индекс для каждого списка создается отдельно.\n";
-			for (int i = 0; i < 5; i++) {
-				index = rand() % lenArray[i];
+			for (int i = 0; i < N; i++) {
+				index = lenArray[i] / 2;
 				clock_t start = clock();
 				lists[i]->insertBefore(index, value);
-				clock_t end = clock();
-				double tacts = (double)(end - start);
-				cout << "Вставка в" << i + 1 << " список после " << index << " элемента." << endl;
+				double time = double(clock() - start);
+				cout << "Вставка в" << i + 1 << " список после " << index << " элемента.";
+				cout << " Время выполнения: " << fixed << time << endl;
 				lenArray[i]++;
 			}
 		}
@@ -181,13 +187,13 @@ int main()
 			// Получение элемента по индексу.
 		{
 			int index = 0;
-			for (int i = 0; i < 5; i++) {
-				index = rand() % lenArray[i];
+			for (int i = 0; i < N; i++) {
+				index = lenArray[i] - 10;
 				clock_t start = clock();
 				int elem = lists[i]->getElem(index);
-				clock_t end = clock();
-				double tacts = (double)(end - start);
+				double time = double(clock() - start);
 				cout << "По индексу " << index << " списка " << i + 1 << " находится значение: " << elem << "." << endl;
+				cout << " Время выполнения: " << fixed << time << endl;
 			}
 		}
 		break;
@@ -195,35 +201,35 @@ int main()
 			// Удаление элемента по индексу.
 		{
 			int index = 0;
-			for (int i = 0; i < 5; i++) {
-				index = rand() % lenArray[i];
+			for (int i = 0; i < N; i++) {
+				index = lenArray[i] - 200;
 				clock_t start = clock();
 				lists[i]->deleteElem(index);
-				clock_t end = clock();
-				double tacts = (double)(end - start);
+				double time = double(clock() - start);
 				cout << "По индексу " << index << " списка " << i + 1 << " был удален элемент." << endl;
+				cout << " Время выполнения: " << fixed << time << endl;
 				lenArray[i]--;
 			}
 		}
 		break;
 		case 8:
 			// Получение длины списка.
-			for (int i = 0; i < 5; i++) {
+			for (int i = 0; i < N; i++) {
 				clock_t start = clock();
 				int length = lists[i]->getListLen();
-				clock_t end = clock();
-				double tacts = (double)(end - start);
+				double time = double(clock() - start);
 				cout << "Длина списка " << i + 1 << " равна " << length << "." << endl;
+				cout << " Время выполнения: " << fixed << time << endl;
 			}
 			break;
 		case 9:
 			// Удаление всех элементов списка.
-			for (int i = 0; i < 5; i++) {
+			for (int i = 0; i < N; i++) {
 				clock_t start = clock();
 				lists[i]->deleteAll();
-				clock_t end = clock();
-				double tacts = (double)(end - start);
+				double time = double(clock() - start);
 				cout << "Список " << i + 1 << " был полностью очищен." << endl;
+				cout << " Время выполнения: " << fixed << time << endl;
 				lenArray[i]--;
 			}
 			break;
@@ -231,139 +237,120 @@ int main()
 			// Заменить значение по индексу.
 		{
 			int index = 0, value = 0;
-			for (int i = 0; i < 5; i++) {
-				index = rand() % lenArray[i];
+			for (int i = 0; i < N; i++) {
+				index = lenArray[i] / 3;
 				value = rand();
 				clock_t start = clock();
 				lists[i]->changeByIndex(index, value);
-				clock_t end = clock();
-				double tacts = (double)(end - start);
+				double time = double(clock() - start);
 				cout << "Значение по индексу " << index << " в списке " << i + 1 << " было заменено на " << value << "." << endl;
+				cout << " Время выполнения: " << fixed << time << endl;
 			}
 		}
 		break;
 		case 11:
 			// Проверка на пустой список
-			for (int i = 0; i < 5; i++) {
+			for (int i = 0; i < N; i++) {
 				clock_t start = clock();
 				bool isNull = lists[i]->checkIsEmpty();
-				clock_t end = clock();
-				double tacts = (double)(end - start);
+				double time = double(clock() - start);
 				cout << "Список " << i + 1;
-				if (!isNull) cout << "не";
+				if (!isNull) cout << " не";
 				cout << " пуст." << endl;
+				cout << " Время выполнения: " << fixed << time << endl;
 			}
 			break;
 		case 12:
 			//Поменять направление списка.
 			cout << endl;
-			for (int i = 0; i < 5; i++) {
+			for (int i = 0; i < N; i++) {
 				clock_t start = clock();
 				lists[i]->changeDirection();
-				clock_t end = clock();
-				double tacts = (double)(end - start);
+				double time = double(clock() - start);
 				cout << "Направление списка " << i + 1 << " было изменено.\n";
+				cout << " Время выполнения: " << fixed << time << endl;
 			}
 			break;
 		case 13:
 			// Вставка списка после определенного элемента.
-			for (int i = 0; i < 4; i += 2) {
-				int index = rand() % lenArray[i];
+			for (int i = 0; i < N - 1; i ++) {
+				int index = lenArray[i] / 2;
 				clock_t start = clock();
-				lists[i]->insertListAfterIndex(lists[i + 1], index);
-				clock_t end = clock();
-				double tacts = (double)(end - start);
+				lists[i]->insertListAfterIndex(lists[N-1], index);
+				double time = double(clock() - start);
 				lenArray[i] += lenArray[i + 1];
-				cout << "Список " << i + 2 << " был вставлен в список " << i + 1 << "после элемента с индексом " << index << "." << endl;
+				cout << "Список " << N << " был вставлен в список " << i + 1 << "после элемента с индексом " << index << "." << endl;
+				cout << " Время выполнения: " << fixed << time << endl;
 			}
 			break;
 		case 14:
 			// Вставка списка после последнего элемента.
-			for (int i = 0; i < 4; i += 2) {
-				int index = rand() % lenArray[i];
+			for (int i = 0; i < N - 1; i ++) {
+				int index = lenArray[i] / 3 * 2;
 				clock_t start = clock();
 				lists[i]->insertListAfterLast(lists[i + 1]);
-				clock_t end = clock();
-				double tacts = (double)(end - start);
+				double time = double(clock() - start);
 				lenArray[i] += lenArray[i + 1];
-				cout << "Список " << i + 2 << " был вставлен в конец списка " << i + 1 << "." << endl;
+				cout << "Список " << N << " был вставлен в конец списка " << i + 1 << "." << endl;
+				cout << " Время выполнения: " << fixed << time << endl;
 			}
 			break;
 		case 15:
 			// Вставка списка перед первым элементом.
-			for (int i = 0; i < 4; i += 2) {
+			for (int i = 0; i < N - 1; i ++) {
 				int index = rand() % lenArray[i];
 				clock_t start = clock();
-				lists[i]->insertListBeforeFirst(lists[i + 1]);
-				clock_t end = clock();
-				double tacts = (double)(end - start);
+				lists[i]->insertListBeforeFirst(lists[N-1]);
+				double time = double(clock() - start);
 				lenArray[i] += lenArray[i + 1];
-				cout << "Список " << i + 2 << " был вставлен в начало списка " << i + 1 << "." << endl;
+				cout << "Список " << N << " был вставлен в начало списка " << i + 1 << "." << endl;
+				cout << " Время выполнения: " << fixed << time << endl;
 			}
 			break;
 		case 16:
 			// Определить вложен ли список.
-			for (int i = 0; i < 4; i += 2) {
+			for (int i = 0; i < N - 1; i++) {
 				clock_t start = clock();
-				bool isNull = lists[i]->ifListInCurrent(lists[i + 1]);
-				clock_t end = clock();
-				double tacts = (double)(end - start);
-				cout << "Список " << i + 2;
+				bool isNull = lists[i]->ifListInCurrent(lists[N-1]);
+				double time = double(clock() - start);
+				cout << "Список " << N;
 				if (!isNull) cout << " не ";
 				cout << " находится в списке " << i + 1 << "." << endl;
+				cout << " Время выполнения: " << fixed << time << endl;
 			}
 			break;
 		case 17:
 			// Найти первое вхождение в список другого списка.
-			for (int i = 0; i < 4; i += 2) {
+			for (int i = 0; i < N - 1; i ++) {
 				clock_t start = clock();
-				int isIn = lists[i]->findFirstEntry(lists[i + 1]);
-				clock_t end = clock();
-				double tacts = (double)(end - start);
+				int isIn = lists[i]->findFirstEntry(lists[N - 1]);
+				double time = double(clock() - start);
 				if (isIn != -1) cout << "Первое вхождение по индексу " << isIn << "." << endl;
 				else cout << "Вхождений не обнаружено.\n";
+				cout << " Время выполнения: " << fixed << time << endl;
 			}
 			break;
 		case 18:
 			// Найти последнее вхождение.
-			/*for (int i = 0; i < 4; i += 2) {
-			*	clock_t start = clock();
-				int isIn = lists[i]->findLastEntry(lists[i + 1]);
-				clock_t end = clock();
-				double tacts = (double)(end - start);
-				if (!isIn) cout << "Последнее вхождение по индексу " << isIn << "." << endl;
+			for (int i = 0; i < N - 1; i ++) {
+				clock_t start = clock();
+				int isIn = lists[i]->findLastEntry(lists[N - 1]);
+				double time = double(clock() - start);
+				if (isIn != -1) cout << "Последнее вхождение по индексу " << isIn << "." << endl;
 				else cout << "Вхождений не обнаружено.\n";
-			}*/
-
-		{
-			cout << "Список 1 имеет вид:\n";
-			Elem* current = lists[0]->head;
-			do {
-				cout << *(current->number) << " ";
-				current = current->next;
-			} while (current != NULL);
-
-			cout << "\nСписок 2 имеет вид:\n";
-			current = lists[1]->head;
-			do {
-				cout << *(current->number) << " ";
-				current = current->next;
-			} while (current != NULL);
-			int isIn = lists[0]->findLastEntry(lists[1]);
-			if (isIn != -1) cout << "Последнее вхождение по индексу " << isIn << "." << endl;
-			else cout << "Вхождений не обнаружено.\n";
-		}
+				cout << " Время выполнения: " << fixed << time << endl;
+			}
 		break;
 		case 19:
 			// Поменять значения двух элементов по индексам местами.
-			for (int i = 0; i < 5; i++) {
-				int index1 = rand() % lenArray[i];
-				int index2 = rand() % lenArray[i];
+			for (int i = 0; i < N; i++) {
+				int index1 = lenArray[i]/2 - 100;
+				int index2 = lenArray[i]/2 + 100;
 				clock_t start = clock();
 				lists[i]->changeTwoByIndex(index1, index2);
-				clock_t end = clock();
-				double tacts = (double)(end - start);
+				double time = double(clock() - start);
 				cout << "В списке " << i + 1 << " изменены значения по индексам " << index1 << " и " << index2 << ".\n";
+				cout << " Время выполнения: " << fixed << time << endl;
 			}
 			break;
 		case 0:
@@ -431,7 +418,7 @@ void OneLinkList::delLast()
 	if (preLast == NULL) cout << "List is empty.\n";
 	else {
 		// переходим к предпоследнему элементу
-		while (preLast->next != this->tail && preLast->next != NULL) {
+		while (preLast->next != this->tail) {
 			preLast = preLast->next;
 		}
 
@@ -440,10 +427,12 @@ void OneLinkList::delLast()
 			cout << "You're deleting the only element.\n";
 			delete preLast->number;
 			delete preLast;
+			this->head = this->tail = NULL;
 		}
 		else {
 			delete preLast->next->number;
 			delete preLast->next;
+			this->tail = preLast;
 		}
 	}
 }
@@ -460,6 +449,7 @@ void OneLinkList::delFirst()
 	// в списке 2 и более элементов
 	Elem* elem = head;
 	head = elem->next;
+	delete elem->number;
 	delete elem;
 
 }
